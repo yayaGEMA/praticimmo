@@ -21,6 +21,7 @@
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="FOSCKEditorBundle">FOS\CKEditorBundle\FOSCKEditorBundle</parameter>
+      <parameter key="ExerciseHTMLPurifierBundle">Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -70,6 +71,10 @@
       <parameter key="FOSCKEditorBundle" type="collection">
         <parameter key="path">C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\friendsofsymfony\ckeditor-bundle\src</parameter>
         <parameter key="namespace">FOS\CKEditorBundle</parameter>
+      </parameter>
+      <parameter key="ExerciseHTMLPurifierBundle" type="collection">
+        <parameter key="path">C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\exercise\htmlpurifier-bundle\src</parameter>
+        <parameter key="namespace">Exercise\HTMLPurifierBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -314,6 +319,13 @@
     <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
     <service id="kernel" class="App\Kernel" public="true" synthetic="true">
       <tag name="routing.route_loader"/>
+    </service>
+    <service id="App\Controller\LogementController" class="App\Controller\LogementController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\LogementController"/>
+      </call>
     </service>
     <service id="App\Controller\MainController" class="App\Controller\MainController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -761,6 +773,7 @@
         <argument>Symfony\Component\Form\Extension\Validator\Type\UploadValidatorExtension</argument>
         <argument>Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension</argument>
         <argument>Symfony\Component\Form\Extension\DataCollector\Type\DataCollectorTypeExtension</argument>
+        <argument>Exercise\HTMLPurifierBundle\Form\TypeExtension\HTMLPurifierTextTypeExtension</argument>
       </argument>
       <argument type="collection">
         <argument>Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser</argument>
@@ -1096,6 +1109,9 @@
         </argument>
         <argument key="Symfony\Component\Form\Extension\Core\Type\SubmitType" type="iterator">
           <argument type="service" id="form.type_extension.submit.validator"/>
+        </argument>
+        <argument key="Symfony\Component\Form\Extension\Core\Type\TextType" type="iterator">
+          <argument type="service" id="exercise_html_purifier.form.text_type_extension"/>
         </argument>
       </argument>
       <argument type="iterator">
@@ -1630,7 +1646,6 @@
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\validator/Resources/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\form/Resources/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\security-core/Resources/translations</argument>
-          <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\framework-bundle/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/FrameworkBundle/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\twig-bundle/translations</argument>
@@ -1655,6 +1670,9 @@
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/MakerBundle/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\friendsofsymfony\ckeditor-bundle\src/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/FOSCKEditorBundle/translations</argument>
+          <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\exercise\htmlpurifier-bundle\src/translations</argument>
+          <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/ExerciseHTMLPurifierBundle/translations</argument>
+          <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo/translations</argument>
           <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/translations</argument>
         </argument>
         <argument key="cache_vary" type="collection">
@@ -1662,7 +1680,6 @@
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\validator/Resources/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\form/Resources/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\security-core/Resources/translations</argument>
-            <argument>translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\framework-bundle/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/FrameworkBundle/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\symfony\twig-bundle/translations</argument>
@@ -1687,6 +1704,9 @@
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/MakerBundle/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\friendsofsymfony\ckeditor-bundle\src/translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/FOSCKEditorBundle/translations</argument>
+            <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\vendor\exercise\htmlpurifier-bundle\src/translations</argument>
+            <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/ExerciseHTMLPurifierBundle/translations</argument>
+            <argument>translations</argument>
             <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\src/Resources/translations</argument>
           </argument>
         </argument>
@@ -2984,6 +3004,9 @@
       <call method="addExtension">
         <argument type="service" id="fos_ck_editor.twig_extension"/>
       </call>
+      <call method="addExtension">
+        <argument type="service" id="exercise_html_purifier.twig.extension"/>
+      </call>
       <call method="addGlobal">
         <argument>app</argument>
         <argument type="service" id="twig.app_variable"/>
@@ -3189,7 +3212,7 @@
       <argument>,</argument>
     </service>
     <service id="twig.runtime_loader" class="Twig\RuntimeLoader\ContainerRuntimeLoader" public="false">
-      <argument type="service" id=".service_locator.7YWluy."/>
+      <argument type="service" id=".service_locator.4l_ga.k"/>
     </service>
     <service id="twig.error_renderer.html" class="Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer" public="false">
       <argument type="service" id="twig"/>
@@ -4663,6 +4686,11 @@
     </service>
     <service id="fos_ck_editor.configuration" class="FOS\CKEditorBundle\Config\CKEditorConfiguration">
       <argument type="collection">
+        <argument key="configs" type="collection">
+          <argument key="my_config" type="collection">
+            <argument key="toolbar">basic</argument>
+          </argument>
+        </argument>
         <argument key="enable">true</argument>
         <argument key="async">false</argument>
         <argument key="auto_inline">true</argument>
@@ -4675,7 +4703,6 @@
         <argument key="js_path">bundles/fosckeditor/ckeditor.js</argument>
         <argument key="jquery_path">bundles/fosckeditor/adapters/jquery.js</argument>
         <argument key="default_config">null</argument>
-        <argument key="configs" type="collection"/>
         <argument key="plugins" type="collection"/>
         <argument key="styles" type="collection"/>
         <argument key="templates" type="collection"/>
@@ -4703,6 +4730,51 @@
       <tag name="twig.extension"/>
       <argument type="service" id="fos_ck_editor.renderer"/>
     </service>
+    <service id="exercise_html_purifier.cache_warmer.serializer" class="Exercise\HTMLPurifierBundle\CacheWarmer\SerializerCacheWarmer" public="false">
+      <tag name="kernel.cache_warmer"/>
+      <argument type="collection">
+        <argument>C:\Users\Marce\OneDrive\Bureau\praticimmo\var\cache\dev/htmlpurifier</argument>
+      </argument>
+      <argument type="collection">
+        <argument>default</argument>
+      </argument>
+      <argument type="service" id="exercise_html_purifier.purifiers_registry"/>
+      <argument type="service" id="filesystem"/>
+    </service>
+    <service id="exercise_html_purifier.form.text_type_extension" class="Exercise\HTMLPurifierBundle\Form\TypeExtension\HTMLPurifierTextTypeExtension" public="false">
+      <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\TextType" extended-type="Symfony\Component\Form\Extension\Core\Type\TextType"/>
+      <argument type="service" id="exercise_html_purifier.purifiers_registry"/>
+    </service>
+    <service id="exercise_html_purifier.twig.extension" class="Exercise\HTMLPurifierBundle\Twig\HTMLPurifierExtension" public="false">
+      <tag name="twig.extension"/>
+    </service>
+    <service id="exercise_html_purifier.twig.runtime" class="Exercise\HTMLPurifierBundle\Twig\HTMLPurifierRuntime" public="false">
+      <tag name="twig.runtime"/>
+      <argument type="service" id="exercise_html_purifier.purifiers_registry"/>
+    </service>
+    <service id="exercise_html_purifier.config.default" class="HTMLPurifier_Config">
+      <argument>default</argument>
+      <argument type="collection">
+        <argument key="Core.Encoding">UTF-8</argument>
+        <argument key="Cache.SerializerPath">C:\Users\Marce\OneDrive\Bureau\praticimmo\var\cache\dev/htmlpurifier</argument>
+      </argument>
+      <argument>null</argument>
+      <argument type="collection"/>
+      <argument type="collection"/>
+      <argument type="collection"/>
+      <argument type="collection"/>
+      <factory class="Exercise\HTMLPurifierBundle\HTMLPurifierConfigFactory" method="create"/>
+    </service>
+    <service id="exercise_html_purifier.default" class="HTMLPurifier">
+      <tag name="exercise.html_purifier" profile="default"/>
+      <argument type="service" id="exercise_html_purifier.config.default"/>
+    </service>
+    <service id="exercise_html_purifier.purifiers_registry" class="Exercise\HTMLPurifierBundle\HTMLPurifiersRegistry" public="false">
+      <argument type="service" id=".service_locator.HZJnjFQ"/>
+    </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\LogementController" class="App\Controller\LogementController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\LogementController" class="App\Controller\LogementController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\LogementController" class="App\Controller\LogementController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\MainController" class="App\Controller\MainController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\MainController" class="App\Controller\MainController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\MainController" class="App\Controller\MainController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5177,6 +5249,12 @@
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
     <service id="monolog.handler.null_internal" class="Monolog\Handler\NullHandler"/>
+    <service id=".service_locator.HZJnjFQ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="default" type="service" id="exercise_html_purifier.default"/>
+      </argument>
+    </service>
     <service id=".service_locator.V.o0zE7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5209,6 +5287,12 @@
         <argument key="session" type="service" id="session" on-invalid="ignore"/>
         <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\LogementController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\LogementController"/>
+      <argument>App\Controller\LogementController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
     </service>
     <service id=".service_locator.vdmMuyE.App\Controller\MainController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\MainController"/>
@@ -5610,9 +5694,10 @@
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
-    <service id=".service_locator.7YWluy." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.4l_ga.k" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="Exercise\HTMLPurifierBundle\Twig\HTMLPurifierRuntime" type="service" id="exercise_html_purifier.twig.runtime"/>
         <argument key="Symfony\Bridge\Twig\Extension\CsrfRuntime" type="service" id="twig.runtime.security_csrf"/>
         <argument key="Symfony\Bridge\Twig\Extension\HttpKernelRuntime" type="service" id="twig.runtime.httpkernel"/>
         <argument key="Symfony\Component\Form\FormRenderer" type="service" id="twig.form.renderer"/>
@@ -5743,6 +5828,8 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="logger" alias="monolog.logger"/>
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger" public="false"/>
+    <service id="Exercise\HTMLPurifierBundle\HTMLPurifiersRegistryInterface" alias="exercise_html_purifier.purifiers_registry" public="false"/>
+    <service id="HTMLPurifier" alias="exercise_html_purifier.default" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="argument_resolver.controller_locator" alias=".service_locator.I3K77mT"/>

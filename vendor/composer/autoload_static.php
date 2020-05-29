@@ -15,6 +15,7 @@ class ComposerStaticInit2946e2143c66cac60bd3445049df133f
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '6a47392539ca2329373e0d33e1dba053' => __DIR__ . '/..' . '/symfony/polyfill-intl-icu/bootstrap.php',
         '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -123,6 +124,7 @@ class ComposerStaticInit2946e2143c66cac60bd3445049df133f
         ),
         'E' => 
         array (
+            'Exercise\\HTMLPurifierBundle\\' => 28,
             'Egulias\\EmailValidator\\' => 23,
         ),
         'D' => 
@@ -469,6 +471,10 @@ class ComposerStaticInit2946e2143c66cac60bd3445049df133f
         array (
             0 => __DIR__ . '/..' . '/friendsofsymfony/ckeditor-bundle/src',
         ),
+        'Exercise\\HTMLPurifierBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/exercise/htmlpurifier-bundle/src',
+        ),
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
@@ -546,6 +552,16 @@ class ComposerStaticInit2946e2143c66cac60bd3445049df133f
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'HTMLPurifier' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Collator' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Collator.php',
         'IntlDateFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/IntlDateFormatter.php',
@@ -559,6 +575,7 @@ class ComposerStaticInit2946e2143c66cac60bd3445049df133f
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit2946e2143c66cac60bd3445049df133f::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit2946e2143c66cac60bd3445049df133f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit2946e2143c66cac60bd3445049df133f::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit2946e2143c66cac60bd3445049df133f::$classMap;
 
         }, null, ClassLoader::class);
