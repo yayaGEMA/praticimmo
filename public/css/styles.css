@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+
+h1{
+    font-family: 'Marck Script', cursive;
+    font-size: 7rem;
+    text-align: center;
+    
+    color:#007bff;
+    
+}
+
+h2{
+    font-family: 'Marck Script', cursive;
+    font-size: 4,8rem;
+    text-align: center;
+    color: grey;
+}
+}
