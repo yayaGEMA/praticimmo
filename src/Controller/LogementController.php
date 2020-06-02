@@ -9,6 +9,8 @@ use App\Entity\Logement;
 use App\Form\LogementType;
 use App\Entity\User;
 use \DateTime;
+use Symfony\Component\Form\FormError;
+
 
 /**
  * @Route("/logement", name="logement_")
@@ -37,7 +39,7 @@ class LogementController extends AbstractController
             $userConnected = $this->getUser();
 
             // Hydratation de la publicationDate et de l'auteur de l'article
-            $article
+            $logement
                 ->setPublicationDate(new DateTime())
                 ->setAuthor($userConnected)
             ;
