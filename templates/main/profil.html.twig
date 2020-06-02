@@ -1,0 +1,46 @@
+{# Utilisation du squelette de page base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre de la page #}
+{% block title %}Gestion du profil{% endblock %}
+
+{# Contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# Affichage des messages flashs de type "success" si il y en a #}
+        {% include 'partials/success.html.twig' %}
+
+        {# H1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Gestion du profil</h1>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1">
+                <div class="row">
+
+                    <div class="col-12 col-md-9 py-3 d-flex justify-content-center align-items-center">
+
+                        {# Infos du compte #}
+                        <ul class="list-group col-12 col-md-8 p-0">
+                            <li class="list-group-item bg-black">Adresse Email : <span class="text-info">{{ app.user.email }}</span></li>
+                            <li class="list-group-item bg-black">Prénom : <span class="text-info">{{ app.user.firstname }}</span></li>
+                            <li class="list-group-item bg-black">Nom : <span class="text-info">{{ app.user.lastname }}</span></li>
+                            <li class="list-group-item bg-black">Adresse : <span class="text-info">{{ app.user.address }}</span></li>
+                            <li class="list-group-item bg-black">Numéro de téléphone : <span class="text-info">{{ app.user.phone }}</span></li>
+                            <li class="list-group-item bg-black">Date d'inscription : <span class="text-info">{{ app.user.registrationDate|date('d/m/Y') }}</span></li>
+                            <li class="list-group-item bg-black">Compte : <span class="text-info">{{ is_granted('ROLE_ADMIN') ? 'Administrateur' : 'Membre' }}</span></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
