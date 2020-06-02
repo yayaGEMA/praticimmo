@@ -1,0 +1,63 @@
+{# Utilisation du squelette de page base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre de la page #}
+{% block title %}Nos locations{% endblock %}
+
+{# Contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# H1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Nos locations</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+
+                {% if logements is empty %}
+
+                    <div class="row">
+                        <p class="col-12 text-center alert alert-warning">Aucune annonce à afficher.</p>
+                    </div>
+
+                {% else %}
+
+                    <div class="row">
+
+                        {# Boucle pour parcourir tous les logements à afficher #}
+                        {% for logement in logements %}
+
+                            <div class="col-12">
+                                <div class="card my-3 bg-black">
+
+                                    <div class="card-header">
+                                        <a>{{ logement.title }}</a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            {{ logement.description|striptags|slice(0, 150) }}
+                                        </div>
+                                        {# Affichage de la date de publication et du pseudonyme de l'auteur #}
+                                        <footer class="blockquote-footer">Publié le <strong>{{ logement.publicationDate|date('d/m/Y à H\\hi') }}</strong> par <strong>{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

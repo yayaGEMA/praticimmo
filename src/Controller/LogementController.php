@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,5 +66,55 @@ class LogementController extends AbstractController
         return $this->render('logements/newLogement.html.twig', [
             'form' => $form->createView()
         ]);
+
+    }
+
+
+    /**
+     * @Route("/locations/", name="location_list")
+     */
+    public function locationList(Request $request, PaginatorInterface $paginator)
+    {
+
+        // Récupération du manager des entités
+        $em = $this->getDoctrine()->getManager();
+
+        // Création d'une requête pour récupérer les logements en location
+        $query = $em->createQuery('SELECT a FROM App\Entity\Logement a WHERE a.type = 0 ORDER BY a.publicationDate DESC');
+
+        // On stocke dans $pageArticles les 10 logements de la page demandée dans l'URL
+        $logements = $paginator->paginate(
+            $query,     // Requête de selection des logements en BDD
+        );
+
+        // On envoi les logements récupérés à la vue
+        return $this->render('logements/LocationList.html.twig', [
+            'logements' => $logements
+        ]);
+
+    }
+
+    /**
+     * @Route("/ventes/", name="sell_list")
+     */
+    public function sellList(Request $request, PaginatorInterface $paginator)
+    {
+
+        // Récupération du manager des entités
+        $em = $this->getDoctrine()->getManager();
+
+        // Création d'une requête pour récupérer les logements en location
+        $query = $em->createQuery('SELECT a FROM App\Entity\Logement a WHERE a.type = 1 ORDER BY a.publicationDate DESC');
+
+        // On stocke dans $pageArticles les 10 logements de la page demandée dans l'URL
+        $logements = $paginator->paginate(
+            $query,     // Requête de selection des logements en BDD
+        );
+
+        // On envoi les logements récupérés à la vue
+        return $this->render('logements/SellList.html.twig', [
+            'logements' => $logements
+        ]);
+
     }
 }
