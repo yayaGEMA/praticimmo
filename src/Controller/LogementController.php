@@ -159,4 +159,17 @@ class LogementController extends AbstractController
         ]);
 
     }
+
+    /**
+     * Page d'affichage d'une annonce en détail
+     *
+     * @Route("/{slug}/", name="logement_view")
+     */
+    public function logementView(Logement $logement, Request $request){
+
+        // Appel de la vue en lui envoyant le logement
+        return $this->render('logement/logementView.html.twig', [
+            'logement' => $logement
+        ]);
+    }
 }
