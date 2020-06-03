@@ -21,7 +21,7 @@ class LogementController extends AbstractController
 {
 
     /**
-     * @Route("/ajouter", name="new_logement")
+     * @Route("/ajouter/", name="new_logement")
      */
     public function newLogement(Request $request)
     {
@@ -36,6 +36,18 @@ class LogementController extends AbstractController
 
         // Si le formulaire a été envoyé
         if($form->isSubmitted() && $form->isValid()){
+
+            // Extraction de l'objet de la photo envoyée dans le formulaire
+            $mainPhoto = $form->get('main_photo')->getData();
+
+            // Création d'un nouveau nom aléatoire pour la photo avec son extension (récupérée via la méthode guessExtension() )
+            $newFileName = md5(time() . rand() . uniqid() ) . '.' . $mainPhoto->guessExtension();
+
+            // Déplacement de la photo dans le dossier que l'on avait paramétré dans le fichier services.yaml, avec le nouveau nom qu'on lui a généré
+            $mainPhoto->move(
+                $this->getParameter('app.user.photo.directory'),     // Emplacement de sauvegarde du fichier
+                $newFileName    // Nouveau nom du fichier
+            );
 
             // Récupération de l'user actuellement connecté
             $userConnected = $this->getUser();
@@ -56,7 +68,7 @@ class LogementController extends AbstractController
             $em->flush();
 
             // TODO: ajouter un message flash de succès
-            // $this->addFlash('success', 'Annonce publiée avec succès !');
+            $this->addFlash('success', 'Annonce publiée avec succès !');
 
             // Redirige sur la page d'accueil
             return $this->redirectToRoute('main_index');
@@ -67,6 +79,36 @@ class LogementController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+
+    /**
+     * @Route("/{id}/edit", name="logement_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Logement $logement): Response
+    {
+        $form = $this->createForm(LogementType::class, $logement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $logementImages = $logement->getLogementImages();
+            foreach($logementImages as $key => $logementImage){
+                $logementImage->setLogement($logement);
+                $logementImages->set($key,$logementImage);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($logement);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main_index', [
+                'id' => $logement->getId(),
+            ]);
+        }
+
+        return $this->render('logement/edit.html.twig', [
+            'logement' => $logement,
+            'form' => $form->createView(),
+        ]);
     }
 
 

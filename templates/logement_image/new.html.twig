@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LogementImage{% endblock %}
+
+{% block body %}
+    <h1>Create new LogementImage</h1>
+
+    {{ include('logement_image/_form.html.twig') }}
+
+    <a href="{{ path('logement_image_index') }}">back to list</a>
+{% endblock %}

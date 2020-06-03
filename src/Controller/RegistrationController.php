@@ -11,26 +11,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use DateTime;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/creer-un-compte/", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthAuthenticator $authenticator): Response
     {
+        // Redirige de force vers l'accueil si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            return $this->redirectToRoute('main_index');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
+            $user
+                ->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
                 )
-            );
+                // Date actuelle
+                ->setRegistrationDate(new DateTime() )
+            ;
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

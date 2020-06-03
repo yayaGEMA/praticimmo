@@ -1,0 +1,16 @@
+{% block _logement_logement_images_widget %}
+    <ul id="logement-images-fields-list"
+        data-prototype="{{ form_widget(prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-counter="{{ value|length }}"
+    >
+        {% for key,logementImageForm in form.children %}
+            {{ form_widget(logementImageForm) }}
+
+        {% endfor %}
+    </ul>
+
+    <button type="button"
+            class="add-another-collection-widget"
+            data-list-selector="#logement-images-fields-list">Ajouter une image</button>
+{% endblock %}
