@@ -1,0 +1,38 @@
+{# Cette page utilise le squelette base.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{# Remplissage du block title avec le titre de la page #}
+{% block title %}{{ logement.title }}{% endblock  %}
+
+{# Remplissage du block body avec le contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# affichage des messages flash de type "succes#}
+        {% include 'partials/success.html.twig' %}
+       
+        
+        <div class="row">
+            <h1 class="col-12 text-center my-4">{{ logement.title }}<h1>
+        </div>
+
+        <div class="row">
+            <p class="col-12 text-center"><a href="{{ path('logement_location_list') }}">Retour liste des locations</a></p>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="card my-2 bg-black">
+                    <div class="card-body">
+                        <footer class="blockquote-footer mb-4">Publié le <strong class="text-light">{{ logement.publicationDate|date('d/m/Y à H\\hi')}}  </strong>par <strong class="text-light">{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
+                        <div class="mb-2">{{ logement.description|purify }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+{% endblock  %}
