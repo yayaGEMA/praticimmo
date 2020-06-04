@@ -22,8 +22,12 @@
             <p class="col-12 text-center"><a href="{{ path('logement_location_list') }}">Retour liste des locations</a></p>
             
             {% if logement.isAuthor(user) %}
+<<<<<<< HEAD
                 <p class="col-12 col-md-2 offset-md-5 text-center alert alert-primary
                 "><a href="{{path('logement_logement_edit', {slug: logement.slug})}}">Modifier l'annonce</a></p>
+=======
+                <p class="col-12 col-md-2 offset-md-5 text-center alert alert-primary"><a href="{{path('logement_logement_edit', {slug: logement.slug})}}">Modifier l'annonce</a></p>
+>>>>>>> 73066000f2a17e4a72a197bb6aa03c4744d153d3
             {% endif %}
 
 

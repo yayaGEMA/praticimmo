@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
-
 /**
  * @Route("/logement", name="logement_")
  */
@@ -82,7 +81,7 @@ class LogementController extends AbstractController
 
         // On appelle la vue en lui transmettant l'affichage du formulaire dans une variable "form"
         return $this->render('logements/newLogement.html.twig', [
-            'NewLogement' => $form->createView()
+            'form' => $form->createView()
         ]);
 
     }
@@ -232,7 +231,7 @@ class LogementController extends AbstractController
     {
 
         // Création du formulaire de modification (c'est le même que le formulaire permettant de créer un nouveau logement, sauf qu'il sera déjà rempli avec les données de "$logement")
-        $form = $this->createForm(EditPhotoType::class, $logement);
+        $form = $this->createForm(EditPhotoType::class);
 
         // Liaison des données de requête (POST) avec le formulaire
         $form->handleRequest($request);
@@ -274,7 +273,7 @@ class LogementController extends AbstractController
         }
 
         // Appel de la vue en lui envoyant le formulaire à afficher
-        return $this->render('logements/editLogement.html.twig', [
+        return $this->render('logements/editPhoto.html.twig', [
             'form' => $form->createView(),
         ]);
 

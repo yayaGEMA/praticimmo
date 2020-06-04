@@ -1,0 +1,47 @@
+{# Utilisation du squelette de page base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre de la page #}
+{% block title %}Modification d'une photo{% endblock %}
+
+{# Contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# Titre h1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Modification d'une photo</h1>
+        </div>
+
+        {# Lien pour retourner sur l'annonce' #}
+        <div class="row">
+            <p class="text-center col-12"><a href="{{ path('logement_logement_view', {slug: form.vars.value.slug}) }}">Revenir sur l'annonce</a></p>
+        </div>
+
+        {# Affichage du formulaire de modification #}
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+
+                {# Ouverture du formulaire #}
+                {{ form_start(form) }}
+
+                    {# L'attribut action du formulaire doit être généré car ce dernier contient l'id de l'article à modifier #}
+                    {{ form(form, {attr: {'action' : path('logement_logement_view', { slug: form.vars.value.slug })}}) }}
+
+                    {{ form_errors(form) }}
+
+                    {# Champ photo #}
+                    {{ form_row(form.mainPhoto) }}
+                    {# Champ bouton #}
+                    {{ form_row(form.save) }}
+
+                {# Fermeture du form #}
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
