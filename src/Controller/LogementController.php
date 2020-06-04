@@ -168,7 +168,7 @@ class LogementController extends AbstractController
     public function logementView(Logement $logement, Request $request){
 
         // Appel de la vue en lui envoyant le logement
-        return $this->render('logement/logementView.html.twig', [
+        return $this->render('logements/logementView.html.twig', [
             'logement' => $logement
         ]);
     }
