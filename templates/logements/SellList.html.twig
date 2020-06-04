@@ -31,19 +31,26 @@
                         {% for logement in logements %}
 
                             <div class="col-12">
-                                <div class="card my-3 bg-black">
+                                <div class="card my-3 bg-black d-flex flex-row">
 
-                                    <div class="card-header">
-                                        <a>{{ logement.title }}</a>
+                                    <div class="col-md-3 m-0">
+                                            <a href="{{ path('logement_logement_view', { slug: logement.slug }) }}" alt=""><img class="img-fluid img-thumbnail m-0" src="{{ asset('images/logements/' ~ logement.mainPhoto) }}"
+                                            </a>
                                     </div>
-
-                                    <div class="card-body">
-                                        <div class="mb-2">
-                                            {{ logement.description|striptags|slice(0, 150) }}
+                                    <div class="col-md-9">
+                                        <div class="card-header">
+                                            <a href="{{ path('logement_logement_view', { slug: logement.slug }) }}
+                                            " >{{ logement.title }}</a>
                                         </div>
-                                        {# Affichage de la date de publication et du pseudonyme de l'auteur #}
-                                        <footer class="blockquote-footer">Publié le <strong>{{ logement.publicationDate|date('d/m/Y à H\\hi') }}</strong> par <strong>{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
 
+                                        <div class="card-body">
+                                            <div class="mb-2">
+                                                {{ logement.description|striptags|slice(0, 150) }}
+                                            </div>
+                                            {# Affichage de la date de publication et du pseudonyme de l'auteur #}
+                                            <footer class="blockquote-footer">Publié le <strong>{{ logement.publicationDate|date('d/m/Y à H\\hi') }}</strong> par <strong>{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
