@@ -222,4 +222,14 @@ class Logement
 
         return $this;
     }
+
+    /**
+     * Is the given User the author of this Logement?
+     *
+     * @return bool
+     */
+    public function isAuthor(User $user = null)
+    {
+        return $user && $user->getId() === $this->getAuthor()->getId();
+    }
 }
