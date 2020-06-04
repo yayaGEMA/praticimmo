@@ -20,19 +20,75 @@
 
         <div class="row">
             <p class="col-12 text-center"><a href="{{ path('logement_location_list') }}">Retour liste des locations</a></p>
+            
+            {% if logement.isAuthor(user) %}
+                <p class="alert alert-warning"><a href="{{path('logement_logement_edit')}}">Modifier l'annonce</a></p>
+            {% endif %}
+
+
         </div>
 
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
                 <div class="card my-2 bg-black">
+                    <div class="card" style="width: 100%;">
+                        <img src="{{ asset('images/logements/' ~ logement.mainPhoto) }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <footer class="blockquote-footer mb-4">Publié le <strong class="text-light">{{ logement.publicationDate|date('d/m/Y à H\\hi')}}  </strong>par <strong class="text-light">{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
+                        
+                        <footer class="blockquote-footer mb-4">Publié le <strong class="text-dark">{{ logement.publicationDate|date('d/m/Y à H\\hi')}}  </strong>par <strong class="text-dark">{{ logement.author.firstname }} {{ logement.author.lastname }}</strong></footer>
                         <div class="mb-2">{{ logement.description|purify }}</div>
-                    </div>
+                        <div class="mb-2">{{ logement.rooms }} chambres - {% if logement.type == 0  %}Loyer{% else %}Prix{% endif %}: {{ logement.price }} €{% if logement.type == 0  %} par mois{% endif %}</div>
+                    </div> 
                 </div>
             </div>
         </div>
-
     </div>
+
+        <!--mon footer-->
+ <footer class="page-footer font-small special-color-dark pt-4 ">
+
+    <!-- Footer Elements -->
+    <div class="container">
+        <h2>Retrouvez-nous !</h2>
+    <!-- Social buttons -->
+            <ul class="list-unstyled list-inline text-center">
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-fb mx-1">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-tw mx-1">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-gplus mx-1">
+                        <i class="fab fa-google-plus-g"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-li mx-1">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-dribbble mx-1">
+                        <i class="fab fa-dribbble"> </i>
+                    </a>
+                </li>
+            </ul>
+    <!-- Social buttons -->
+    </div>
+    <!-- Footer Elements -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
    
 {% endblock  %}
+
+
