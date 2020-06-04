@@ -31,10 +31,10 @@
                         {% for logement in logements %}
 
                             <div class="col-12">
-                                <div class="card my-3 bg-black">
+                                <div class="card my-3 bg-black d-flex flex-row ">
 
-                                    <div class="col-md-3">                                
-                                            <a href="{{ path('logement_logement_view', { slug: logement.slug }) }}" alt=""><img class="img-fluid img-thumbnail" src="{{ asset('images/logements/' ~ app.logement.mainPhoto) }}"
+                                    <div class="col-md-3 rounded float-left">                                
+                                            <a href="{{ path('logement_logement_view', { slug: logement.slug }) }}" alt=""><img class="img-fluid img-thumbnail" src="{{ asset('images/logements/' ~ logement.mainPhoto) }}"
                                             </a>                                       
                                     </div>
                                     <div class="col-md-9">
