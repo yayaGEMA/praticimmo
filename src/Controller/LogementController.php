@@ -9,9 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Logement;
 use App\Form\LogementType;
+use App\Form\EditLogementType;
+use App\Form\EditPhotoType;
 use App\Entity\User;
 use \DateTime;
 use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 
 /**
@@ -78,12 +82,14 @@ class LogementController extends AbstractController
 
         // On appelle la vue en lui transmettant l'affichage du formulaire dans une variable "form"
         return $this->render('logements/newLogement.html.twig', [
-            'form' => $form->createView()
+            'NewLogement' => $form->createView()
         ]);
 
     }
 
     /**
+     * Modification des photos par Vich
+     *
      * @Route("/{id}/edit", name="logement_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Logement $logement): Response
@@ -173,5 +179,100 @@ class LogementController extends AbstractController
         return $this->render('logements/logementView.html.twig', [
             'logement' => $logement
         ]);
+    }
+
+    /**
+     * Page user permettant de modifier une annonce existant via son slug passé dans l'url
+     *
+     * @Route("/{slug}/modifier/", name="logement_edit")
+     * @Security("logement.isAuthor(user)")
+     */
+    public function logementEdit(Logement $logement, request $request)
+    {
+
+        // Création du formulaire de modification (c'est le même que le formulaire permettant de créer un nouveau logement, sauf qu'il sera déjà rempli avec les données de "$logement")
+        $form = $this->createForm(EditLogementType::class, $logement);
+
+        // Liaison des données de requête (POST) avec le formulaire
+        $form->handleRequest($request);
+
+        // Si le formulaire est envoyé et n'a pas d'erreur
+        if($form->isSubmitted() && $form->isValid()){
+
+            // Sauvegarde des changements faits via le manager général des entités
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            // Message flash de type "success"
+            $this->addFlash('success', 'Annonce modifiée avec succès !');
+
+            // Redirection vers la page du bien modifié
+            return $this->redirectToRoute('logement_logement_view', ['slug' => $logement->getSlug()]);
+
+        }
+
+        // Appel de la vue en lui envoyant le formulaire à afficher
+        return $this->render('logements/editLogement.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+    /**
+     * Page user permettant de modifier une photo
+     *
+     * @Route("/{slug}/modifier-photo/", name="photo_edit")
+     * @Security("logement.isAuthor(user)")
+     */
+    public function photoEdit(Logement $logement, request $request)
+    {
+
+        // Création du formulaire de modification (c'est le même que le formulaire permettant de créer un nouveau logement, sauf qu'il sera déjà rempli avec les données de "$logement")
+        $form = $this->createForm(EditPhotoType::class, $logement);
+
+        // Liaison des données de requête (POST) avec le formulaire
+        $form->handleRequest($request);
+
+        // Si le formulaire est envoyé et n'a pas d'erreur
+        if($form->isSubmitted() && $form->isValid()){
+
+            if($this->getLogement()->getMainPhoto() != null){
+
+                // Suppression de l'ancienne photo
+                unlink($this->getParameter('app.user.photo.directory') . $this->getLogement()->getMainPhoto());
+            }
+
+            do{
+
+                // guessExtension() permet de récupérer la vrai extension du fichier, calculée par rapport à son vrai type MIME
+                $newFileName = md5( $this->getLogement()->getId() . random_bytes(100) ) . '.' . $mainPhoto->guessExtension();
+
+            } while(file_exists($this->getParameter('app.user.photo.directory') . $newFileName));
+
+            // Changement du nom de la photo stockée dans l'utilisateur connecté
+            $this->getLogement()->setMainPhoto($newFileName);
+
+            // Sauvegarde des changements faits via le manager général des entités
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $mainPhoto->move(
+                $this->getParameter('app.user.photo.directory'),    // Emplacement cible du déplacement
+                $newFileName        // Nouveau nom du fichier déplacé
+            );
+
+            // Message flash de type "success"
+            $this->addFlash('success', 'Photo modifiée avec succès !');
+
+            // Redirection vers la page du bien modifié
+            return $this->redirectToRoute('logement_view', ['slug' => $logement->getSlug()]);
+
+        }
+
+        // Appel de la vue en lui envoyant le formulaire à afficher
+        return $this->render('logements/editLogement.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
     }
 }
