@@ -175,9 +175,13 @@ class LogementController extends AbstractController
      */
     public function logementView(Logement $logement, Request $request){
 
+        // Récupération de l'user actuellement connecté
+        $userConnected = $this->getUser();
+
         // Appel de la vue en lui envoyant le logement
         return $this->render('logements/logementView.html.twig', [
-            'logement' => $logement
+            'logement' => $logement,
+            'user' => $userConnected,
         ]);
     }
 

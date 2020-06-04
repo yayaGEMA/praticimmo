@@ -22,7 +22,7 @@
             <p class="col-12 text-center"><a href="{{ path('logement_location_list') }}">Retour liste des locations</a></p>
             
             {% if logement.isAuthor(user) %}
-                <p class="alert alert-warning"><a href="{{path('logement_logement_edit')}}">Modifier l'annonce</a></p>
+                <p class="alert alert-warning"><a href="{{path('logement_logement_edit', {slug: logement.slug})}}">Modifier l'annonce</a></p>
             {% endif %}
 
 
