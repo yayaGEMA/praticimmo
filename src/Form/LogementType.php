@@ -97,8 +97,9 @@ class LogementType extends AbstractType
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/jpg',
                         ],
-                        'mimeTypesMessage' => 'L\'image doit être de type jpg ou png',
+                        'mimeTypesMessage' => 'L\'image doit être de type jpeg ou png',
                         'maxSizeMessage' => 'Fichier trop volumineux ({{ size }} {{ suffix }}). La taille maximum autorisée est {{ limit }}{{ suffix }}',
                     ]),
                     new NotBlank([
