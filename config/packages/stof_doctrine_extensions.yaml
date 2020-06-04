@@ -1,11 +1,7 @@
 # Read the documentation: https://symfony.com/doc/current/bundles/StofDoctrineExtensionsBundle/index.html
 # See the official DoctrineExtensions documentation for more details: https://github.com/Atlantic18/DoctrineExtensions/tree/master/doc/
 stof_doctrine_extensions:
-<<<<<<< HEAD
-    default_locale: en_US
-=======
     default_locale: fr_FR
     orm:
-            default:
-                sluggable: true
->>>>>>> eb26cc0111f1d105c27f8c5a7ece8b8e08daf23b
+        default:
+            sluggable: true

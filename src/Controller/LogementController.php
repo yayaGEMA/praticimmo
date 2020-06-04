@@ -52,6 +52,8 @@ class LogementController extends AbstractController
             // Récupération de l'user actuellement connecté
             $userConnected = $this->getUser();
 
+            $logement->setMainPhoto($newFileName);
+
             // Hydratation de la publicationDate et de l'auteur de l'article
             $logement
                 ->setPublicationDate(new DateTime())
@@ -168,7 +170,7 @@ class LogementController extends AbstractController
     public function logementView(Logement $logement, Request $request){
 
         // Appel de la vue en lui envoyant le logement
-        return $this->render('logement/logementView.html.twig', [
+        return $this->render('logements/logementView.html.twig', [
             'logement' => $logement
         ]);
     }
